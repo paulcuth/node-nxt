@@ -1,0 +1,67 @@
+<html>
+	<head>
+		<title>Remote control</title>
+
+		<script src="/socket.io/socket.io.js"></script>
+
+		<script>
+			window.onload = function () {
+				var s = new io.Socket (null, { rememberTransport: false });
+			
+				s.on ('connect', function () {
+					console.log (123);
+				});
+			
+				s.connect ();
+
+
+				document.getElementById ('forward').onclick = function () {
+					s.send ('forward');
+				};
+								
+				document.getElementById ('back').onclick = function () {
+					s.send ('back');
+				};
+								
+				document.getElementById ('left').onclick = function () {
+					s.send ('left');
+				};
+								
+				document.getElementById ('right').onclick = function () {
+					s.send ('right');
+				};
+								
+				document.getElementById ('stop').onclick = function () {
+					s.send ('stop');
+				};
+
+			};
+		</script>
+		
+		<style>
+			button {
+				height: 100px;
+				width: 100px;
+				float: left;
+			}
+			
+			#forward, #back {
+				clear: left;
+				margin-left: 100px;
+			}
+			
+			#left {
+				clear: left;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Remote</h1>
+		<p></p>
+		<button id="forward">^</button>
+		<button id="left">&lt;</button>
+		<button id="stop">Stop</button>
+		<button id="right">&gt;</button>
+		<button id="back">v</button>
+	</body>
+</html>
