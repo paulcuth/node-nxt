@@ -1,4 +1,5 @@
-{   "name" : "node-nxt",
+{   
+	"name" : "node-nxt",
     "version" : "0.0.1",
     "description" : "Node.js interface to pbLua running on a Lego Mindstorms NXT device.",
     "author": "Paul Cuthbertson <github@paulcuth.me.uk>"

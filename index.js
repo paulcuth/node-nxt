@@ -193,7 +193,7 @@ Nxt.prototype.BtGetConnectEntry = function (idx, callback) {
 		return callback (name, parseInt (class, 10), pin, addr, parseInt (handle, 10), parseInt (status, 10), parseInt (linkq, 10));
 	};
 	
-	this._send ('nxt.BtGetDeviceEntry (' + escape (idx) + ')', wrap);
+	this._send ('nxt.BtGetConnectEntry (' + escape (idx) + ')', wrap);
 };
 
 
@@ -245,12 +245,16 @@ Nxt.prototype.BtSetPIN = function (pin) {
 
 
 
-Nxt.prototype.BtStreamMode = function () { /* TODO */ };
+Nxt.prototype.BtStreamMode = function (mode) {
+	this._send ('nxt.BtStreamMode (' + escape (mode) + ')');
+};
 
 
 
 
-Nxt.prototype.BtStreamRecv = function () { /* TODO */ };
+Nxt.prototype.BtStreamRecv = function (callback) {
+	this._send ('nxt.BtStreamRecv ()', callback);
+};
 
 
 
@@ -290,17 +294,23 @@ Nxt.prototype.DisplayClear = function () {
 
 
 
-Nxt.prototype.DisplayFlip = function () { /* TODO */ };
+Nxt.prototype.DisplayFlip = function (state, callback) {
+	this._send ('nxt.DisplayFlip (' + escape (state) + ')', toNumber (callback));
+};
 
 
 
 
-Nxt.prototype.DisplayGetPixel = function () { /* TODO */ };
+Nxt.prototype.DisplayGetPixel = function (x, y, callback) {
+	this._send ('nxt.DisplayGetPixel (' + escape (x) + ',' + escape (y) + ')', toNumber (callback));
+};
 
 
 
 
-Nxt.prototype.DisplayInvert = function () { /* TODO */ };
+Nxt.prototype.DisplayInvert = function (state, callback) {
+	this._send ('nxt.DisplayInvert (' + escape (state) + ')', toNumber (callback));
+};
 
 
 
@@ -312,12 +322,16 @@ Nxt.prototype.DisableNXT = function (s) {
 
 
 
-Nxt.prototype.DisplayPixel = function () { /* TODO */ };
+Nxt.prototype.DisplayPixel = function (x, y state) {
+	this._send ('nxt.DisplayPixel (' + escape (x) + '' + escape (y) + '' + escape (state) + ')');
+};
 
 
 
 
-Nxt.prototype.DisplayScroll = function () { /* TODO */ };
+Nxt.prototype.DisplayScroll = function () {
+	this._send ('nxt.DisplayScroll ()');
+};
 
 
 
@@ -396,52 +410,70 @@ Nxt.prototype.FileWrite = function () { /* TODO */ };
 
 
 
-Nxt.prototype.HeapInfo = function () { /* TODO */ };
+Nxt.prototype.HeapInfo = function (force, callback) { /* TODO */ };
 
 
 
 
-Nxt.prototype.I2CGetStatus = function () { /* TODO */ };
+Nxt.prototype.I2CGetStatus = function (callback) {
+	this._send ('nxt.I2CGetStatus ()', toNumbers (callback));
+};
 
 
 
 
-Nxt.prototype.I2CInitPins = function () { /* TODO */ };
+Nxt.prototype.I2CInitPins = function (port) {
+	this._send ('nxt.I2CInitPins (' + escape (port) + ')');
+};
 
 
 
 
-Nxt.prototype.I2CSendData = function () { /* TODO */ };
+Nxt.prototype.I2CSendData = function (port, start, length) {
+	this._send ('nxt.I2CSendData (' + escape (port) + ',' + escape (start) + ',' + escape (length) + ')');
+};
 
 
 
 
-Nxt.prototype.I2CRecvData = function () { /* TODO */ };
+Nxt.prototype.I2CRecvData = function function (port, length, callback) {
+	this._send ('nxt.I2CRecvData (' + escape (port) + ',' + escape (length) + ')', callback);
+};
 
 
 
 
-Nxt.prototype.InputGetStatus = function () { /* TODO */ };
+Nxt.prototype.InputGetStatus = function (port, callback) {
+	this._send ('nxt.InputGetStatus (' + escape (port) + ')', toNumbers (callback));
+};
 
 
 
 
-Nxt.prototype.InputSetDir = function () { /* TODO */ };
+Nxt.prototype.InputSetDir = function (port, dir0, dir1) {
+	this._send ('nxt.InputSetDir (' + escape (port) + ',' + escape (dir0) + ',' + escape (dir1) + ')');
+};
 
 
 
 
-Nxt.prototype.InputSetType = function () { /* TODO */ };
+Nxt.prototype.InputSetType = function (port, type, mode) {
+	this._send ('nxt.InputSetType (' + escape (port) + ',' + escape (type) + ',' + escape (mode) + ')');
+};
 
 
 
 
-Nxt.prototype.InputSetState = function () { /* TODO */ };
+Nxt.prototype.InputSetState = function (port, state0, state1) {
+	this._send ('nxt.InputSetState (' + escape (port) + ',' + escape (state0) + ',' + escape (state1) + ')');
+};
 
 
 
 
-Nxt.prototype.InputSetValue = function () { /* TODO */ };
+Nxt.prototype.InputSetValue = function (port, value) {
+	this._send ('nxt.InputSetState (' + escape (port) + ',' + escape (value) + ')');
+};
 
 
 
@@ -532,17 +564,23 @@ Nxt.prototype.RS485SendData = function () { /* TODO */ };
 
 
 
-Nxt.prototype.SoundGetStatus = function () { /* TODO */ };
+Nxt.prototype.SoundGetStatus = function (callback) {
+	this._send ('nxt.SoundGetStatus ()', toNumber (callback));
+};
 
 
 
 
-Nxt.prototype.SoundMelody = function () { /* TODO */ };
+Nxt.prototype.SoundMelody = function (melody, volume) {
+	this._send ('nxt.SoundMelody (' + escape (melody) + ',' + escape (volume) + ')');
+};
 
 
 
 
-Nxt.prototype.SoundTone = function () { /* TODO */ };
+Nxt.prototype.SoundTone = function (frequency, duration, volume) {
+	this._send ('nxt.SoundTone (' + escape (frequency) + ',' + escape (duration) + ',' + escape (volume) + ')');
+};
 
 
 
