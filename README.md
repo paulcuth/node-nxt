@@ -36,7 +36,6 @@ Use callbacks to retrieve returned values:
 	nxt.TimerRead (function (time) {
 		sys.print ('Time on nxt: ' + time);
 	});
-};
 ```
 
 See also the included example script.
