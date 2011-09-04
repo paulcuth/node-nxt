@@ -103,7 +103,8 @@ Nxt.prototype._fire = function (event, params) {
 
 
 Nxt.prototype._onData = function (data) {
-	//sys.print ('DATA: ' + data + '\n');
+	sys.print ('DATA: ' + data + '\n');
+	
 	if (data.substr (0, 1) == '>') return;
 	
 	var index,
@@ -322,8 +323,8 @@ Nxt.prototype.DisableNXT = function (s) {
 
 
 
-Nxt.prototype.DisplayPixel = function (x, y state) {
-	this._send ('nxt.DisplayPixel (' + escape (x) + '' + escape (y) + '' + escape (state) + ')');
+Nxt.prototype.DisplayPixel = function (x, y, state) {
+	this._send ('nxt.DisplayPixel (' + escape (x) + ',' + escape (y) + ',' + escape (state) + ')');
 };
 
 
@@ -350,67 +351,105 @@ Nxt.prototype.EncodeIR = function (data, mode) {
 
 
 
-Nxt.prototype.FileChooser = function () { /* TODO */ };
+Nxt.prototype.FileChooser = function (operation, timeout, callback) {
+	this._send ('nxt.FileChooser (' + escape (operation) + ',' + escape (timeout) + ')', callback);
+};
 
 
 
 
-Nxt.prototype.FileClose = function () { /* TODO */ };
+Nxt.prototype.FileClose = function (handle, callback) {
+	this._send ('nxt.FileClose (' + escape (handle) + ')', toNumber (callback));
+};
 
 
 
 
-Nxt.prototype.FileCreate = function () { /* TODO */ };
+Nxt.prototype.FileCreate = function (name, maxbytes, callback) {
+	this._send ('nxt.FileCreate (' + escape (name) + ',' + escape (maxbytes) + ')', toNumber (callback));
+};
 
 
 
 
-Nxt.prototype.FileDelete = function () { /* TODO */ };
+Nxt.prototype.FileDelete = function (name, callback) {
+	this._send ('nxt.FileDelete (' + escape (name) + ')', toNumber (callback));
+};
 
 
 
 
-Nxt.prototype.FileExists = function () { /* TODO */ };
+Nxt.prototype.FileExists = function (name, callback) {
+	var wrap = function (string) {
+		return callback (string === 'true');
+	};
+	
+	this._send ('nxt.FileExists (' + escape (name) + ')', wrap);
+};
 
 
 
 
-Nxt.prototype.FileFormat = function () { /* TODO */ };
+Nxt.prototype.FileFormat = function (type, callback) {
+	this._send ('nxt.FileFormat (' + escape (type) + ')', toNumber (callback));
+};
 
 
 
 
-Nxt.prototype.FileHandleInfo = function () { /* TODO */ };
+Nxt.prototype.FileHandleInfo = function (handle, callback) {
+	wrap = function (type, name, block, maxBytes, curBytes, curPtr) {
+		return callback (parseInt (type, 10), name, parseInt (block, 10), parseInt (maxBytes, 10), parseInt (curBytes, 10), parseInt (curPtr, 10));
+	};
+		
+	this._send ('nxt.FileHandleInfo (' + escape (handle) + ')', wrap);
+};
 
 
 
 
-Nxt.prototype.FileOpen = function () { /* TODO */ };
+Nxt.prototype.FileOpen = function (name, callback) {
+	this._send ('nxt.FileOpen (' + escape (name) + ')', toNumber (callback));
+};
 
 
 
 
-Nxt.prototype.FileRead = function () { /* TODO */ };
+Nxt.prototype.FileRead = function (handle, bytes, callback) {
+	var wrap = function (string) {
+		return callback ((string === 'nil')? undefined : string);
+	};
+	
+	this._send ('nxt.FileRead (' + escape (handle) + ',' + escape (bytes) + ')', wrap);
+};
 
 
 
 
-Nxt.prototype.FileSeek = function () { /* TODO */ };
+Nxt.prototype.FileSeek = function (handle, offset, callback) {
+	this._send ('nxt.FileSeek (' + escape (handle) + ',' + escape (offset) + ')', toNumber (callback));
+};
 
 
 
 
-Nxt.prototype.FileSysInfo = function () { /* TODO */ };
+Nxt.prototype.FileSysInfo = function (handle, callback) {
+	this._send ('nxt.FileSysInfo (' + escape (handle) + ')', toNumbers (callback));
+};
 
 
 
 
-Nxt.prototype.FileWrite = function () { /* TODO */ };
+Nxt.prototype.FileWrite = function (handle, string, callback) {
+	this._send ('nxt.FileWrite (' + escape (handle) + ',' + escape (string) + ')', toNumber (callback));
+};
 
 
 
 
-Nxt.prototype.HeapInfo = function (force, callback) { /* TODO */ };
+Nxt.prototype.HeapInfo = function (force, callback) {
+	throw new Error ('Not implemented');
+};
 
 
 
@@ -436,7 +475,7 @@ Nxt.prototype.I2CSendData = function (port, start, length) {
 
 
 
-Nxt.prototype.I2CRecvData = function function (port, length, callback) {
+Nxt.prototype.I2CRecvData = function (port, length, callback) {
 	this._send ('nxt.I2CRecvData (' + escape (port) + ',' + escape (length) + ')', callback);
 };
 
@@ -478,17 +517,23 @@ Nxt.prototype.InputSetValue = function (port, value) {
 
 
 
-Nxt.prototype.MemInfo = function () { /* TODO */ };
+Nxt.prototype.MemInfo = function (callback) {
+	this._send ('nxt.MemInfo ()', toNumbers (callback));
+};
 
 
 
 
-Nxt.prototype.MemRead = function () { /* TODO */ };
+Nxt.prototype.MemRead = function (addr, string, callback) {
+	this._send ('nxt.MemRead (' + escape (addr) + ',' + escape (string) + ')', toNumber (callback));
+};
 
 
 
 
-Nxt.prototype.MemWrite = function () { /* TODO */ };
+Nxt.prototype.MemWrite = function (addr, string, callback) {
+	this._send ('nxt.MemWrite (' + escape (addr) + ',' + escape (string) + ')', toNumber (callback));
+};
 
 
 
@@ -549,17 +594,23 @@ Nxt.prototype.Reflash = function () {
 
 
 
-Nxt.prototype.RS485Enable = function () { /* TODO */ };
+Nxt.prototype.RS485Enable = function (rate) {
+	this._send ('nxt.RS485Enable (' + escape (rate) + ')');
+};
 
 
 
 
-Nxt.prototype.RS485RecvData = function () { /* TODO */ };
+Nxt.prototype.RS485RecvData = function (callback) {
+	this._send ('nxt.RS485RecvData ()', callback);
+};
 
 
 
 
-Nxt.prototype.RS485SendData = function () { /* TODO */ };
+Nxt.prototype.RS485SendData = function (string) {
+	this._send ('nxt.RS485SendData (' + escape (string) + ')');
+};
 
 
 

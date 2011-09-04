@@ -1,6 +1,12 @@
 {   
-	"name" : "node-nxt",
-    "version" : "0.0.1",
+	"name": "node-nxt",
+    "version": "0.0.1",
+	"main": "./node-nxt.js",
     "description" : "Node.js interface to pbLua running on a Lego Mindstorms NXT device.",
-    "author": "Paul Cuthbertson <github@paulcuth.me.uk>"
+    "author": "Paul Cuthbertson <github@paulcuth.me.uk>",
+    "keywords": ["NXT", "Mindstorms", "Lego", "pbLua"],
+    "repository": {
+    	"type": "git",
+		"url": "http://github.com/paulcuth/node-nxt.git"
+	}
 }
