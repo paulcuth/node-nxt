@@ -6,7 +6,8 @@ var sys = require ('sys'),
 
 function toNumber (callback) {
 	return function (val) {
-		return parseInt (callback (val));
+		if (!callback) return;
+		return parseInt (callback (val), 10);
 	};
 };
 
@@ -103,7 +104,7 @@ Nxt.prototype._fire = function (event, params) {
 
 
 Nxt.prototype._onData = function (data) {
-	sys.print ('DATA: ' + data + '\n');
+	//sys.print ('DATA: ' + data + '\n');
 	
 	if (data.substr (0, 1) == '>') return;
 	
@@ -337,8 +338,8 @@ Nxt.prototype.DisplayScroll = function () {
 
 
 
-Nxt.prototype.DisplayText = function (text) {
-	this._send ('nxt.DisplayText (' + escape (text) + ')');
+Nxt.prototype.DisplayText = function (text, x, y, invert) {
+	this._send ('nxt.DisplayText (' + escape (text) + ',' + escape (x) + ',' + escape (y) + ',' + escape (invert) + ')');
 };
 
 
