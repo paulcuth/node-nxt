@@ -1,5 +1,5 @@
 
-var sys = require ('sys'),
+var util = require('util'),
 	nodeNxt = require ('node-nxt');
 	
 	
@@ -25,7 +25,7 @@ nodeNxt.connect ('/dev/cu.usbmodem621', function (nxt) {
 
 	nxt.on ('disconnect', function () {
 		clearTimeout (i);
-		sys.print ('Disconnected :( Bye bye');
+		util.print ('Disconnected :( Bye bye');
 	});
 
 });
