@@ -1,4 +1,3 @@
-
 var sys = require ('sys'),
 	fs = require('fs');
 
@@ -191,8 +190,8 @@ Nxt.prototype.BtFactoryReset = function () {
 
 
 Nxt.prototype.BtGetConnectEntry = function (idx, callback) {
-	var wrap = function (name, class, pin, addr, handle, status, linkq) {
-		return callback (name, parseInt (class, 10), pin, addr, parseInt (handle, 10), parseInt (status, 10), parseInt (linkq, 10));
+	var wrap = function (name, klass, pin, addr, handle, status, linkq) {
+		return callback (name, parseInt (klass, 10), pin, addr, parseInt (handle, 10), parseInt (status, 10), parseInt (linkq, 10));
 	};
 	
 	this._send ('nxt.BtGetConnectEntry (' + escape (idx) + ')', wrap);
@@ -202,8 +201,8 @@ Nxt.prototype.BtGetConnectEntry = function (idx, callback) {
 
 
 Nxt.prototype.BtGetDeviceEntry = function (idx, callback) {
-	var wrap = function (name, class, addr, status) {
-		return callback (name, parseInt (class, 10), addr, parseInt (status, 10));
+	var wrap = function (name, klass, addr, status) {
+		return callback (name, parseInt (klass, 10), addr, parseInt (status, 10));
 	};
 	
 	this._send ('nxt.BtGetDeviceEntry (' + escape (idx) + ')', wrap);
